@@ -10,14 +10,13 @@ export default function FloatingHearts() {
   const hostRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const host = hostRef.current;
-    if (!host) return;
-
     let alive = true;
     let intervalId: number | null = null;
 
     function spawnHeart(x?: number, y?: number, big?: boolean) {
       if (!alive) return;
+      const host = hostRef.current;
+      if (!host) return;
 
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -47,7 +46,7 @@ export default function FloatingHearts() {
       const drift = rand(-70, 70);
       heart.style.marginLeft = `${drift}px`;
 
-      host.appendChild(heart);
+      host?.appendChild(heart);
 
       window.setTimeout(() => heart.remove(), dur * 1000 + 250);
     }
@@ -98,7 +97,7 @@ export default function FloatingHearts() {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("visibilitychange", onVisibility);
-      host.innerHTML = "";
+      if (hostRef.current) hostRef.current.innerHTML = "";
       delete (window as any).__valentineBurst;
     };
   }, []);
