@@ -33,15 +33,15 @@ export default function Page() {
     ];
 
     const subtitles = [
-      "It was your birthday and I was so excited to celebrate that with you",
-      "You looked unreal here.",
-      "It was our 1st year anniversary",
-      "This is the moment I knew separating from you was not easy",
-      "We went out and had a lovely day on a sunday",
+      "The day I asked you to be my girlfriend, and you looked so beautiful.",
+      "It was your birthday, and I was so excited to celebrate with you.",
+      "You looked so beautiful here.",
+      "Our first-year anniversary.",
+      "The moment I knew being away from you would never be easy.",
+      "We went out and had a lovely Sunday together.",
       "One of my favorite snapshots.",
-      "You look more beautiful than the flower and always happy to celebrate you.",
-      "You, and my borch.",
-      "We have gone to so many places over the years.",
+      "You looked more beautiful than the flowers, and I was so happy to celebrate you.",
+      "We have gone to so many places together over the years.",
       "Still my favorite person.",
     ];
 
