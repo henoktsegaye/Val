@@ -1,65 +1,88 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useMemo, useState } from "react";
+import FloatingHearts from "@/components/FloatingHearts";
+import WelcomeScreen from "@/components/WelcomeScreen";
+import MemoryCarousel from "@/components/MemoryCarousel";
+
+type Slide = {
+  id: string;
+  imageSrc: string;
+  title: string;
+  subtitle: string;
+  bg: { a: string; b: string; c: string };
+};
+
+export default function Page() {
+  // You can hardcode, or read from query param, etc.
+  const [name] = useState("Selome");
+  const [stage, setStage] = useState<"welcome" | "memories">("welcome");
+
+  const slides: Slide[] = useMemo(() => {
+    const imageFiles = [
+      "IMG_1846.jpg",
+      "IMG_1880.jpg",
+      "IMG_3071.jpg",
+      "IMG_3261.jpg",
+      "IMG_4209.JPG",
+      "IMG_5493.JPG",
+      "20231224_165408.jpg",
+      "IMG_5854.jpg",
+      "IMG_7465.JPG",
+      "IMG_7830.jpg",
+    ];
+
+    const subtitles = [
+      "It was your birthday and I was so excited to celebrate that with you",
+      "You looked unreal here.",
+      "It was our 1st year anniversary",
+      "This is the moment I knew separating from you was not easy",
+      "We went out and had a lovely day on a sunday",
+      "One of my favorite snapshots.",
+      "You look more beautiful than the flower and always happy to celebrate you.",
+      "You, and my borch.",
+      "We have gone to so many places over the years.",
+      "Still my favorite person.",
+    ];
+
+    const gradients = [
+      { a: "#ff4d8d", b: "#1b0b1a", c: "#0b0b14" },
+      { a: "#ffd1dc", b: "#3b1232", c: "#0b0b14" },
+      { a: "#ff2d55", b: "#1a0b24", c: "#0b0b14" },
+      { a: "#ff7aa8", b: "#10112a", c: "#0b0b14" },
+      { a: "#ffe3ea", b: "#2a0f1f", c: "#0b0b14" },
+    ];
+
+    return imageFiles.map((file, i) => ({
+      id: String(i + 1),
+      imageSrc: `/${file}`,
+      title: `Moment #${i + 1}`,
+      subtitle: subtitles[i] ?? "A moment I'll always remember.",
+      bg: gradients[i % gradients.length],
+    }));
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="relative h-dvh overflow-hidden">
+      {/* Background glow layer driven by carousel state (passed via props) */}
+      <div className="pointer-events-none absolute inset-0 opacity-90 z-0" id="bgLayer" />
+
+      <div className="relative z-10 mx-auto flex h-dvh w-full max-w-[520px] flex-col px-4 py-4 min-h-0">
+        {stage === "welcome" ? (
+          <WelcomeScreen
+            name={name}
+            onStart={() => setStage("memories")}
+          />
+        ) : (
+          <MemoryCarousel
+            name={name}
+            slides={slides}
+            onBackToWelcome={() => setStage("welcome")}
+          />
+        )}
+      </div>
+
+      <FloatingHearts />
     </div>
   );
 }

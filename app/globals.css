@@ -1,26 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root{
+  --shadow: 0 20px 80px rgba(0,0,0,.45);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100dvh;
+  width: 100%;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+body{
+  margin: 0;
+  color: rgba(255,255,255,.92);
+  font-family: "Manrope", sans-serif;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(255,77,141,.18), transparent 60%),
+    radial-gradient(900px 700px at 90% 20%, rgba(255,45,85,.18), transparent 60%),
+    radial-gradient(1000px 700px at 50% 90%, rgba(255,209,220,.12), transparent 60%),
+    linear-gradient(180deg, #0b0b14, #140a16);
+  overflow: hidden;
+}
+
+.display{
+  font-family: "Playfair Display", serif;
+}
+
+/* Card + buttons */
+.card{
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  box-shadow: var(--shadow);
+}
+
+.btnPrimary{
+  border: none;
+  border-radius: 999px;
+  padding: 12px 14px;
+  font-weight: 750;
+  font-size: 14px;
+  color: #140a16;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffffff, #ffd1dc);
+  box-shadow: 0 14px 30px rgba(255,209,220,.18);
+}
+
+.btnGhost{
+  border-radius: 999px;
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(255,255,255,.92);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.14);
+  cursor: pointer;
+}
+
+.btnMini{
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 800;
+  font-size: 12px;
+  color: #140a16;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffffff, rgba(255,77,141,.35));
+}
+
+/* Dots */
+.dot, .dotActive{
+  height: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  background: rgba(255,255,255,.28);
+}
+.dot{ width: 8px; }
+.dotActive{
+  width: 18px;
+  background: linear-gradient(135deg, rgba(255,77,141,1), rgba(255,209,220,1));
+}
+
+/* Floating hearts layer */
+.heartsLayer{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  overflow: hidden;
+}
+
+.heart{
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  transform: rotate(45deg);
+  opacity: .7;
+  filter: drop-shadow(0 8px 16px rgba(255,77,141,.35));
+  animation: floatUp var(--dur) linear forwards;
+  will-change: transform, opacity;
+  background: currentColor;
+  border-radius: 3px;
+}
+
+.heart::before, .heart::after{
+  content:"";
+  position:absolute;
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  border-radius: 50%;
+}
+.heart::before{ left:-9px; top:0; }
+.heart::after{ left:0; top:-9px; }
+
+@keyframes floatUp{
+  0%   { transform: translateY(0) rotate(45deg) scale(var(--s)); opacity: 0; }
+  10%  { opacity: .75; }
+  100% { transform: translateY(calc(-1 * var(--rise))) rotate(45deg) scale(var(--s)); opacity: 0; }
 }
