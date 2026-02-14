@@ -20,13 +20,13 @@ export default function Page() {
 
   const slides: Slide[] = useMemo(() => {
     const imageFiles = [
+      "20231224_165408.jpg",
       "IMG_1846.jpg",
       "IMG_1880.jpg",
       "IMG_3071.jpg",
       "IMG_3261.jpg",
       "IMG_4209.JPG",
       "IMG_5493.JPG",
-      "20231224_165408.jpg",
       "IMG_5854.jpg",
       "IMG_7465.JPG",
       "IMG_7830.jpg",

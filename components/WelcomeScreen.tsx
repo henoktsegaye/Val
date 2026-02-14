@@ -34,8 +34,9 @@ export default function WelcomeScreen({
 
             <div className="mt-4 rounded-2xl border border-red-400/70 bg-red-500/10 px-4 py-3 text-sm leading-relaxed text-white/90">
               <span className="font-extrabold text-red-200">Love:</span>{" "}
-              I like you as a person, and you have been here for me, which I
-              appreciate so much. I love you.
+              You are my first love, and you matter to me. I appreciate the way
+              you have been here for me. I love you, I always want the best for
+              you, and I want to support you in your journey as much as I can.
             </div>
           </div>
 
